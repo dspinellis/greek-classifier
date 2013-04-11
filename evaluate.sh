@@ -1,4 +1,8 @@
 #!/bin/bash
+#
+# Evaluate the classifier's performance
+#
+
 ALLFILES="highly-cited-bio-all.txt highly-cited-cs-all.txt"
 GREEKFILES="highly-cited-bio-el.txt highly-cited-el.txt"
 
@@ -29,6 +33,6 @@ echo "$TN / ($TN + $FP)" | bc -l
 echo -n 'Accuracy: '
 echo "($TP + $TN) / ($TP + $TN + $FP + $FN)" | bc -l
 
-#Matthews correlation coefficient
+# Matthews correlation coefficient
 echo -n 'MCC: '
 echo "($TP * $TN - $FP * $FN) / sqrt(($TP + $FP) * ($TP + $FN) * ($TN + $FP) * ($TN + $FN))" | bc -l
