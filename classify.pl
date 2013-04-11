@@ -51,7 +51,7 @@ distance
 			my $ngram = substr($_, $s, $n);
 			# Relative frequency of ngram in training set
 			my $fa = (exists($ngp->{$ngram})) ?
-				$ngp->{$ngram} : 0;
+				$ngp->{$ngram} * 10 : 0;
 			$sum += sqr((2 * ($fa - $fA) / ($fA + $fa)));
 			#print "fa=$fa fA=$fA sum=$sum\n";
 		}
