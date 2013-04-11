@@ -25,7 +25,7 @@ while (<>) {
 
 # Print results
 for (my $n = 2; $n <= $max_gram; $n++) {
-	for my $g (keys $gram[$n]) {
+	for my $g (keys %{$gram[$n]}) {
 		print "$g\t", $gram[$n]{$g} / $count[$n], "\n";
 	}
 }
