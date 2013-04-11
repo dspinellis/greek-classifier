@@ -10,14 +10,14 @@ GREEKFILES="highly-cited-bio-el.txt highly-cited-el.txt"
 # ALEXOPOULOS PAPADIMITRIOU POLYDOROS VOLAKIS YANNAKAKIS
 # Greek highly cited in bio-all: 3
 # CHROUSOS KYRIAKIS MANIATIS
-fgrep -v -f 'greek-in-all.txt' $ALLFILES >nongreek.txt
+fgrep -h -v -f 'greek-in-all.txt' $ALLFILES >nongreek.txt
 
 NONGREEK=`wc -l <nongreek.txt`
 GREEK=`cat $GREEKFILES | wc -l`
 
 # Count true and false positives and negatives
-TP=$(perl classify.pl $GREEKFILES | wc -l)
-FP=$(perl classify.pl nongreek.txt | wc -l)
+TP=$(perl greek-classifier.pl $GREEKFILES | wc -l)
+FP=$(perl greek-classifier.pl nongreek.txt | wc -l)
 TN=$(expr $NONGREEK - $FP)
 FN=$(expr $GREEK - $TP)
 
