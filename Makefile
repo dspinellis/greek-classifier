@@ -1,8 +1,8 @@
-greek.dg: ngram.pl
-	awk -F'	' '{print $$1 "\n" $$2}' grnames.txt | \
-	grconv -x transcribe | \
-	tr ' ' \\n | \
-	grep -v '[^A-Z^\$$]' | \
+ngram.el: ngram.pl
+	awk -F';'  '{print $$1}' onomata_epitheta.csv | \
+	sed '1d;s/"//g;s/  *$$//' | \
+	grconv -S UTF-8 -x transcribe | \
+	grep -v '[^A-Z]' | \
 	perl ngram.pl | \
 	sort -t'	' -k2gr >$@
 
@@ -15,9 +15,13 @@ train.txt: sample.txt
 test.txt: sample.txt
 	tail -2000 $< >$@
 
+ngram.all: mixed-surnames.txt
+	perl ngram.pl $< | \
+	sort -t'	' -k2gr >$@
+
 # Extract mixed names
-mixed-names.txt:
+mixed-surnames.txt:
 	echo 'select name from names;' | \
 	sqlite3 /cygdrive/c/vol/geonames/names.sqlite | \
 	grep -v '[^A-Za-z]' | \
-	tr a-z A-Z >mixed-names.txt
+	tr a-z A-Z >mixed-surnames.txt
