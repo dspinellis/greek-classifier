@@ -4,6 +4,7 @@ use strict;
 use warnings;
 use Getopt::Std;
 
+$main::VERSION = '1.0';
 # Exit after command processing error
 $Getopt::Std::STANDARD_HELP_VERSION = 1;
 
@@ -142,7 +143,11 @@ read_ngram
 {
 	my($fname, $ngp) = @_;
 
-	open(my $in, '<', $fname) || die "Unable to open $fname: $_\n";
+	my $in;
+
+	open($in, '<', "/usr/local/lib/greek-classifier/$fname") ||
+	open($in, '<', "/usr/lib/greek-classifier/$fname") ||
+	open($in, '<', $fname) || die "Unable to open $fname: $_\n";
 	while (<$in>) {
 		chop;
 		my ($ngram, $prob) = split(/\t/);
