@@ -5,7 +5,7 @@ direct the matching to be performed on specified fields or the longest
 part of a field.
 
 # Installation
-Run ```make install``
+Run ```make install```
 
 # Execution
 The classifier requires two files containing n-grams derived from
@@ -37,14 +37,14 @@ YANNAKAKIS
 ```
 greek-classifier [-d distance] [-k field] [-l] [-t separator] [file ...]
 greek-classifier -g [file ...]
--d distance	Specify the distance that generates a match (default 9)
-		Higher values increase precision (fewer wrong entries)
-		Lower values increase recall (fewer missed entries)
--D		Print the calculated distances
--g		Generate an n-gram table
--k field	Specify field to match; first is 1 (default whole line)
--l		Match only line's / field's longest word
--t separator	Specify field separator RE (space characters by default)
--u		Normalize matched part to uppercase
--w		Print matching word, rather than matching line
+-d distance     Specify the distance that generates a match (default 9)
+                Higher values increase precision (fewer wrong entries)
+                Lower values increase recall (fewer missed entries)
+-D              Print the calculated distances
+-g              Generate an n-gram table
+-k field        Specify field to match; first is 1 (default whole line)
+-l              Match only line's / field's longest word
+-t separator    Specify field separator RE (space characters by default)
+-u              Normalize matched part to uppercase
+-w              Print matching word, rather than matching line
 ```
