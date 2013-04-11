@@ -97,6 +97,8 @@ while(<>) {
 
 	$field =~ y/[a-z]/[A-Z]/ if ($opt_u);
 
+	next if (length($field) < 2);
+
 	$word= "^$field\$";
 
 	# Print result if match
