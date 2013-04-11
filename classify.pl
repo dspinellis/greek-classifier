@@ -3,6 +3,9 @@
 use strict;
 use warnings;
 
+# Default distance
+my $opt_d = 9;
+
 my $max_gram = 4;
 
 my %greek_ng;
@@ -14,19 +17,19 @@ read_ngram('ngram.all', \%all_ng);
 while(<>) {
 	chop;
 	my $word = "^$_\$";
-	print "$_ ", "\n" if(classify($word, \%greek_ng, \%all_ng) == 0);
+	print "$_ ", "\n" if(delta($word, \%greek_ng, \%all_ng) > $opt_d);
 	#print "$_ GD:", distance($word, \%greek_ng), "\n";
 	#print "$_ AD:", distance($word, \%all_ng), "\n";
 }
 
 # Given two references to arrays of n-gram probabilities
-# return an integer indicating the closest one
+# return the difference in their distance
 sub
-classify
+delta
 {
 	my ($word, $ngp0, $ngp1) = @_;
 
-	return distance($word, $ngp0) < distance($word, $ngp1) ? 0 : 1;
+	return distance($word, $ngp1) - distance($word, $ngp0);
 }
 
 sub
