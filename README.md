@@ -48,3 +48,13 @@ greek-classifier -g [file ...]
 -u              Normalize matched part to uppercase
 -w              Print matching word, rather than matching line
 ```
+
+# Performance
+These are the classifier's performance metrics,
+as reported by the script ```evaluate.sh```
+
+* Precision: .94
+* Recall: .86
+* Specificity: .97
+* Accuracy: .94
+* MCC: .86
