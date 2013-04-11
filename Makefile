@@ -1,22 +1,21 @@
-ngram.el: ngram.pl
+INSTPREFIX=/usr/local
+
+install:
+	mkdir -p $(INSTPREFIX)/lib/greek-classifier
+	install -m 644 ngram.all ngram.el $(INSTPREFIX)/lib/greek-classifier/
+	install greek-classifier.pl $(INSTPREFIX)/bin/greek-classifier
+
+# The following rules serve only documentation purposes
+ngram.el: greek-classifier.pl
 	awk -F';'  '{print $$1}' onomata_epitheta.csv | \
 	sed '1d;s/"//g;s/  *$$//' | \
 	grconv -S UTF-8 -x transcribe | \
 	grep -v '[^A-Z]' | \
-	perl ngram.pl | \
+	perl greek-classifier.pl -g | \
 	sort -t'	' -k2gr >$@
 
-sample.txt: greek.dg
-	cat CCRacist/*.txt ; 
-
-train.txt: sample.txt
-	head -2000 $< >$@
-
-test.txt: sample.txt
-	tail -2000 $< >$@
-
-ngram.all: mixed-surnames.txt
-	perl ngram.pl $< | \
+ngram.all: mixed-surnames.txt greek-classifier.pl
+	perl greek-classifier.pl -g $< | \
 	sort -t'	' -k2gr >$@
 
 # Extract mixed names
