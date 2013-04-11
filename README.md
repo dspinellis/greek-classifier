@@ -11,8 +11,27 @@ Run ```make install``
 The classifier requires two files containing n-grams derived from
 large collections of Greek and international surnames.
 Therefore, run it from the directory containing the source code
-(as ```./greek-classifier.pl```), or install it in order to run it
+(as ```perl greek-classifier.pl```), or install it in order to run it
 from any directory (as ```greek-classifier```).
+
+## Example
+```
+perl greek-classifier.pl highly-cited-cs-all.txt
+ALAMOUTI
+ALEXOPOULOS
+CURTIS
+DENNIS
+KOMLOS
+PAPADIMITRIOU
+POLYDOROS
+TRIVEDI
+VALIANT
+VARANASI
+VARDI
+VAZIRANI
+VOLAKIS
+YANNAKAKIS
+```
 
 # Command-line options
 ```
