@@ -27,7 +27,7 @@ $Getopt::Std::STANDARD_HELP_VERSION = 1;
 
 my $max_gram = 4;
 
-our($opt_D, $opt_d, $opt_g, $opt_k, $opt_l, $opt_t, $opt_u, $opt_w);
+our($opt_D, $opt_d, $opt_g, $opt_k, $opt_l, $opt_r, $opt_t, $opt_u, $opt_w);
 
 # Default distance
 $opt_d = 9;
@@ -35,7 +35,7 @@ $opt_d = 9;
 # Default field separator
 $opt_t = '\s+';
 
-if (!getopts('Dd:gk:lt:uw')) {
+if (!getopts('Dd:gk:lr:t:uw')) {
 	main::HELP_MESSAGE(*STDERR);
 	exit 1;
 }
@@ -55,7 +55,9 @@ $0 -g [file ...]
 -g		Generate an n-gram table
 -k field	Specify field to match; first is 1 (default whole line)
 -l		Match only line's / field's longest word
--t separator	Specify field separator RE (space characters by default)
+-r rec-sep	Specify record separator string (default is newline)
+		Character escapes (e.g. \\r) are recognized
+-t field-sep	Specify field separator RE (space characters by default)
 -u		Normalize matched part to uppercase
 -w		Print matching word, rather than matching line
 };
@@ -71,6 +73,9 @@ my %all_ng;
 
 read_ngram('ngram.el', \%greek_ng);
 read_ngram('ngram.all', \%all_ng);
+
+# Set record separator, recognizing character escapes
+local $/ = eval(qq{"$opt_r"}) if defined($opt_r);
 
 while(<>) {
 	chop;
