@@ -58,3 +58,8 @@ as reported by the script ```evaluate.sh```
 * Specificity: .97
 * Accuracy: .94
 * MCC: .86
+
+# Use case
+The Python 3 script ```greek-scientists.py``` is a small CGI web application
+that queries the DBLP bibliographic database for Greek scientists who have
+published in a given venue over a specific period.
