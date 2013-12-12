@@ -128,21 +128,22 @@ def tail():
 """)
 
 
-def full_writer(output, venue, start, end, result_q):
+def full_writer(output, venue, start, end, writer_q):
     """Write all the names to the classifier."""
     count = 0
     for author in conf_authors(venue, start, end):
         output.write((author + '\n').encode('UTF-8'))
         count = count + 1
     output.close()
-    result_q.put(count)
+    writer_q.put(count)
 
-greek_authors = set()
 
-def greek_reader(input):
+def greek_reader(input, reader_q):
     """Add names returned by the classifier to the greek_authors set."""
+    greek_authors = set()
     for line in input:
         greek_authors.add(line.decode('utf-8'))
+    reader_q.put(greek_authors)
 
 
 def results():
@@ -174,14 +175,16 @@ def results():
             ['/usr/local/bin/greek-classifier', '-u'],
             stdout=subprocess.PIPE,
             stdin=subprocess.PIPE)
-    result_q = Queue()
+    # Queues for getting data from the threads
+    writer_q = Queue()
+    reader_q = Queue()
     w = threading.Thread(target = full_writer,
-                     args=[proc.stdin, venue, start, end, result_q])
-    r = threading.Thread(target = greek_reader, args=[proc.stdout])
+                     args=(proc.stdin, venue, start, end, writer_q))
+    r = threading.Thread(target = greek_reader, args=(proc.stdout, reader_q))
     r.start()
     w.start()
-    r.join()
-    total_count = result_q.get()
+    total_count = writer_q.get()
+    greek_authors = reader_q.get()
     print("<p>"
           "List of {} (probably) Greek authors out of a total of {} authors, "
           "who have published in \"{}\" during the period {}&ndash;{}."
