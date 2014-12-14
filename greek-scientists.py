@@ -1,4 +1,4 @@
-#!/usr/local/bin/python3.1
+#!/usr/bin/env python3
 #
 # CGI application that queries DBLP for publications in a given venue and
 # year range, and displays authors with Greek names.
